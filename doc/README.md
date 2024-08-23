@@ -34,27 +34,27 @@ sys_role_menu
    - company_id
    - status
 
-5. 菜单表
+5. 菜单表 --> 前端动态菜单路由
 sys_menu
    - id
-   - menu_title
-   - menu_key
-   - url
-   - params
+   - menu_title 中文菜单标题
+   - menu_name 英文菜单标题
+   - url 菜单url
+   - params 菜单路径参数
    - menu_icon
-   - parent_id
+   - parent_id 父级菜单id，没有父级则为-1
    - company_id
-   - is_admin_menu
+   - is_admin_menu admin专用菜单
    - sort
    - status
 
-6. 菜单明细表
+6. 菜单权限表 --> 菜单及其所需要的crud权限
 sys_menu_permission
    - id
    - menu_id
-   - menu_title
-   - menu_key
-   - remark
+   - menu_name 菜单名称
+   - menu_permission 菜单权限
+   - remark 权限描述
    - status
 
 7. 用户-部门关联表
