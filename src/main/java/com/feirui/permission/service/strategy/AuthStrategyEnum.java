@@ -2,9 +2,9 @@ package com.feirui.permission.service.strategy;
 
 import com.feirui.permission.constant.AuthTypeConstant;
 import com.feirui.permission.domain.AuthCondition;
-import io.micrometer.common.util.StringUtils;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.springframework.util.StringUtils;
 
 import java.util.Objects;
 
@@ -54,12 +54,10 @@ public enum AuthStrategyEnum {
         }
     };
 
-    public abstract void authExecute(AuthCondition authCondition);
-
     private final String authType;
 
     public static AuthStrategyEnum getAuthStrategy(String authType) {
-        if (StringUtils.isBlank(authType)) return null;
+        if (StringUtils.hasLength(authType)) return null;
         for (AuthStrategyEnum authStrategy : AuthStrategyEnum.values()) {
             if (Objects.equals(authStrategy.authType, authType)) {
                 return authStrategy;
@@ -67,4 +65,6 @@ public enum AuthStrategyEnum {
         }
         return null;
     }
+
+    public abstract void authExecute(AuthCondition authCondition);
 }
