@@ -1,7 +1,7 @@
 package com.feirui.token.service.impl;
 
+import cn.hutool.json.JSONUtil;
 import com.feirui.common.constant.RedisConstant;
-import com.feirui.common.json.JSON;
 import com.feirui.common.redis.RedisUtils;
 import com.feirui.common.utils.MD5Utils;
 import com.feirui.common.utils.RsaHelper;
@@ -38,7 +38,7 @@ public class UserSecurityServiceImpl implements UserSecurityService {
         // 用于踢下线token跨服务用于不踢下线token
         user.setAccessTime(currentTime + tokenTime * 1000);
         // 用户不可同时登录相同账号，否则已登录账号下线
-        String token = RsaHelper.encipher(JSON.toJSONString(user), sysSettingService.getPublicKey(), RsaHelper.enSegmentSize);
+        String token = RsaHelper.encipher(JSONUtil.toJsonStr(user), sysSettingService.getPublicKey(), RsaHelper.enSegmentSize);
         log.info("用户登录，新token:{},来源：{}", token, loginType);
         // 设置token过期时间，用户踢下线
         redisUtils.setEX(RedisConstant.COMMON_USER_TOKEN + user.getId() + "_" + loginType,
@@ -61,7 +61,7 @@ public class UserSecurityServiceImpl implements UserSecurityService {
         long tokenTime = 60 * 60L;
         long currentTime = System.currentTimeMillis();
         user.setAccessTime(currentTime + tokenTime * 1000);
-        String token = RsaHelper.encipher(JSON.toJSONString(user), sysSettingService.getPublicKey(), RsaHelper.enSegmentSize);
+        String token = RsaHelper.encipher(JSONUtil.toJsonStr(user), sysSettingService.getPublicKey(), RsaHelper.enSegmentSize);
         // token，redis缓存，不做踢下线处理
         assert token != null;
         redisUtils.setEX(RedisConstant.COMMON_TOKEN + MD5Utils.getMd5Code(token),

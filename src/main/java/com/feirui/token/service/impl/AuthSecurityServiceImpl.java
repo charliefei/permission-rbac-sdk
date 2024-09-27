@@ -1,7 +1,7 @@
 package com.feirui.token.service.impl;
 
+import cn.hutool.json.JSONUtil;
 import com.feirui.common.constant.RedisConstant;
-import com.feirui.common.json.JSON;
 import com.feirui.common.redis.RedisUtils;
 import com.feirui.common.utils.QunjeObjectUtils;
 import com.feirui.common.utils.RsaHelper;
@@ -25,13 +25,13 @@ public class AuthSecurityServiceImpl implements AuthSecurityService {
     @Override
     public AuthUserModel getUserByToken(String token, String privateKey) {
         AuthUserModel res = null;
-        AuthUserModel authUserModel = JSON.parseObject(RsaHelper.decipher(token, privateKey, RsaHelper.deSegmentSize)
+        AuthUserModel authUserModel = JSONUtil.toBean(RsaHelper.decipher(token, privateKey, RsaHelper.deSegmentSize)
                 , AuthUserModel.class);
         if (authUserModel != null) {
-            Object user = redisUtils.get(RedisConstant.COMMON_USER_HEADER + authUserModel.getId());
+            String user = redisUtils.get(RedisConstant.COMMON_USER_HEADER + authUserModel.getId());
             // redis缓存人员
             if (QunjeObjectUtils.isNotEmpty(user)) {
-                res = JSON.convertObject(user, AuthUserModel.class);
+                res = JSONUtil.toBean(user, AuthUserModel.class);
             }
             if (res == null) {
                 // 数据库查询人员

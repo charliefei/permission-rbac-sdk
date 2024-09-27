@@ -1,6 +1,7 @@
 package com.feirui.common.json;
 
 import cn.hutool.json.JSONException;
+import cn.hutool.json.JSONUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,6 +13,8 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class TypeUtils {
+    public static final String DEFAULT_DATE_FORMAT_DAY = "yyyy-MM-dd";
+    public static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
     private static final Logger logger = LoggerFactory.getLogger(TypeUtils.class);
 
@@ -24,7 +27,7 @@ public class TypeUtils {
             return (String) value;
         }
 
-        return JSON.toJSONString(value);
+        return JSONUtil.toJsonStr(value);
     }
 
     public static Byte castToByte(Object value) {
@@ -216,10 +219,10 @@ public class TypeUtils {
 
             if (strVal.indexOf('-') != -1) {
                 String format;
-                if (strVal.length() == JSON.DEFAULT_DATE_FORMAT.length()) {
-                    format = JSON.DEFAULT_DATE_FORMAT;
-                } else if (strVal.length() == JSON.DEFAULT_DATE_FORMAT_DAY.length()) {
-                    format = JSON.DEFAULT_DATE_FORMAT_DAY;
+                if (strVal.length() == DEFAULT_DATE_FORMAT.length()) {
+                    format = DEFAULT_DATE_FORMAT;
+                } else if (strVal.length() == DEFAULT_DATE_FORMAT_DAY.length()) {
+                    format = DEFAULT_DATE_FORMAT_DAY;
                 } else {
                     format = "yyyy-MM-dd HH:mm:ss.SSS";
                 }
