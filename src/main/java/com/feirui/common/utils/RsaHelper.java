@@ -1,4 +1,4 @@
-package com.feirui.permission.utils;
+package com.feirui.common.utils;
 
 import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;

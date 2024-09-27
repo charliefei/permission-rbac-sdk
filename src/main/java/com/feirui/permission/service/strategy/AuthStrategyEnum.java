@@ -1,6 +1,6 @@
 package com.feirui.permission.service.strategy;
 
-import com.feirui.permission.constant.AuthTypeConstant;
+import com.feirui.common.constant.AuthTypeConstant;
 import com.feirui.permission.domain.AuthCondition;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

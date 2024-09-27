@@ -1,4 +1,4 @@
-package com.feirui.permission.constant;
+package com.feirui.common.constant;
 
 public class AuthTypeConstant {
     /**

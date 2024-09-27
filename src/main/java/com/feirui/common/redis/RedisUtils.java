@@ -1,4 +1,4 @@
-package com.feirui.permission.redis;
+package com.feirui.common.redis;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -7,39 +7,37 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * RedisUtil工具类
  */
 @Component
 @Slf4j
-public class RedisUtil {
+public class RedisUtils {
 
     private static final String CACHE_KEY_SEPARATOR = ".";
     @Resource
-    private RedisTemplate redisTemplate;
+    private RedisTemplate<String, Object> redisTemplate;
 
     /**
      * 构建缓存key
      */
     public String buildKey(String... strObjs) {
-        return Stream.of(strObjs).collect(Collectors.joining(CACHE_KEY_SEPARATOR));
+        return String.join(CACHE_KEY_SEPARATOR, strObjs);
     }
 
     /**
      * 是否存在key
      */
     public boolean exist(String key) {
-        return redisTemplate.hasKey(key);
+        return Boolean.TRUE.equals(redisTemplate.hasKey(key));
     }
 
     /**
      * 删除key
      */
     public boolean del(String key) {
-        return redisTemplate.delete(key);
+        return Boolean.TRUE.equals(redisTemplate.delete(key));
     }
 
     /**
@@ -52,8 +50,15 @@ public class RedisUtil {
     /**
      * set(带过期)
      */
-    public boolean setNx(String key, String value, Long time, TimeUnit timeUnit) {
-        return redisTemplate.opsForValue().setIfAbsent(key, value, time, timeUnit);
+    public void setEX(String key, String value, Long time, TimeUnit timeUnit) {
+        redisTemplate.opsForValue().set(key, value, time, timeUnit);
+    }
+
+    /**
+     * set(带过期)
+     */
+    public boolean setNX(String key, String value, Long time, TimeUnit timeUnit) {
+        return Boolean.TRUE.equals(redisTemplate.opsForValue().setIfAbsent(key, value, time, timeUnit));
     }
 
     /**
@@ -64,14 +69,14 @@ public class RedisUtil {
     }
 
     public Boolean zAdd(String key, String value, Long score) {
-        return redisTemplate.opsForZSet().add(key, value, Double.valueOf(String.valueOf(score)));
+        return redisTemplate.opsForZSet().add(key, value, Double.parseDouble(String.valueOf(score)));
     }
 
     public Long countZset(String key) {
         return redisTemplate.opsForZSet().size(key);
     }
 
-    public Set<String> rangeZset(String key, long start, long end) {
+    public Set<Object> rangeZset(String key, long start, long end) {
         return redisTemplate.opsForZSet().range(key, start, end);
     }
 
@@ -80,15 +85,15 @@ public class RedisUtil {
     }
 
     public void removeZsetList(String key, Set<String> value) {
-        value.stream().forEach((val) -> redisTemplate.opsForZSet().remove(key, val));
+        value.forEach((val) -> redisTemplate.opsForZSet().remove(key, val));
     }
 
     public Double score(String key, Object value) {
         return redisTemplate.opsForZSet().score(key, value);
     }
 
-    public Set<String> rangeByScore(String key, long start, long end) {
-        return redisTemplate.opsForZSet().rangeByScore(key, Double.valueOf(String.valueOf(start)), Double.valueOf(String.valueOf(end)));
+    public Set<Object> rangeByScore(String key, long start, long end) {
+        return redisTemplate.opsForZSet().rangeByScore(key, Double.parseDouble(String.valueOf(start)), Double.parseDouble(String.valueOf(end)));
     }
 
     public Object addScore(String key, Object obj, double score) {

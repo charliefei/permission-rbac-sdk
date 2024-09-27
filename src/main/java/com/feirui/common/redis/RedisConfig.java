@@ -1,4 +1,4 @@
-package com.feirui.permission.redis;
+package com.feirui.common.redis;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
