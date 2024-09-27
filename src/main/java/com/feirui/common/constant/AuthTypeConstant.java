@@ -29,9 +29,4 @@ public class AuthTypeConstant {
      * 自定义部门
      */
     public static final String USER_DEFINITION_DEPART = "-1";
-
-    /**
-     * 管理员
-     */
-    public static final int IS_ADMIN = 1;
 }

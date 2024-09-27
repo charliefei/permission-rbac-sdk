@@ -13,9 +13,9 @@ import java.util.Date;
 
 public class TypeUtils {
 
-    private static Logger logger = LoggerFactory.getLogger(TypeUtils.class);
+    private static final Logger logger = LoggerFactory.getLogger(TypeUtils.class);
 
-    public static final String castToString(Object value) {
+    public static String castToString(Object value) {
         if (value == null) {
             return null;
         }
@@ -27,7 +27,7 @@ public class TypeUtils {
         return JSON.toJSONString(value);
     }
 
-    public static final Byte castToByte(Object value) {
+    public static Byte castToByte(Object value) {
         if (value == null) {
             return null;
         }
@@ -36,9 +36,8 @@ public class TypeUtils {
             return ((Number) value).byteValue();
         }
 
-        if (value instanceof String) {
-            String strVal = (String) value;
-            if (strVal.length() == 0) {
+        if (value instanceof String strVal) {
+            if (strVal.isEmpty()) {
                 return null;
             }
 
@@ -52,7 +51,7 @@ public class TypeUtils {
         throw new JSONException("can not cast to byte, value : " + value);
     }
 
-    public static final Character castToChar(Object value) {
+    public static Character castToChar(Object value) {
         if (value == null) {
             return null;
         }
@@ -61,10 +60,9 @@ public class TypeUtils {
             return (Character) value;
         }
 
-        if (value instanceof String) {
-            String strVal = (String) value;
+        if (value instanceof String strVal) {
 
-            if (strVal.length() == 0) {
+            if (strVal.isEmpty()) {
                 return null;
             }
 
@@ -78,7 +76,7 @@ public class TypeUtils {
         throw new JSONException("can not cast to byte, value : " + value);
     }
 
-    public static final Short castToShort(Object value) {
+    public static Short castToShort(Object value) {
         if (value == null) {
             return null;
         }
@@ -87,10 +85,9 @@ public class TypeUtils {
             return ((Number) value).shortValue();
         }
 
-        if (value instanceof String) {
-            String strVal = (String) value;
+        if (value instanceof String strVal) {
 
-            if (strVal.length() == 0) {
+            if (strVal.isEmpty()) {
                 return null;
             }
 
@@ -104,7 +101,7 @@ public class TypeUtils {
         throw new JSONException("can not cast to short, value : " + value);
     }
 
-    public static final BigDecimal castToBigDecimal(Object value) {
+    public static BigDecimal castToBigDecimal(Object value) {
         if (value == null) {
             return null;
         }
@@ -118,14 +115,14 @@ public class TypeUtils {
         }
 
         String strVal = value.toString();
-        if (strVal.length() == 0) {
+        if (strVal.isEmpty()) {
             return null;
         }
 
         return new BigDecimal(strVal);
     }
 
-    public static final BigInteger castToBigInteger(Object value) {
+    public static BigInteger castToBigInteger(Object value) {
         if (value == null) {
             return null;
         }
@@ -139,14 +136,14 @@ public class TypeUtils {
         }
 
         String strVal = value.toString();
-        if (strVal.length() == 0) {
+        if (strVal.isEmpty()) {
             return null;
         }
 
         return new BigInteger(strVal);
     }
 
-    public static final Float castToFloat(Object value) {
+    public static Float castToFloat(Object value) {
         if (value == null) {
             return null;
         }
@@ -157,7 +154,7 @@ public class TypeUtils {
 
         if (value instanceof String) {
             String strVal = value.toString();
-            if (strVal.length() == 0) {
+            if (strVal.isEmpty()) {
                 return null;
             }
 
@@ -171,7 +168,7 @@ public class TypeUtils {
         throw new JSONException("can not cast to float, value : " + value);
     }
 
-    public static final Double castToDouble(Object value) {
+    public static Double castToDouble(Object value) {
         if (value == null) {
             return null;
         }
@@ -182,7 +179,7 @@ public class TypeUtils {
 
         if (value instanceof String) {
             String strVal = value.toString();
-            if (strVal.length() == 0) {
+            if (strVal.isEmpty()) {
                 return null;
             }
 
@@ -215,8 +212,7 @@ public class TypeUtils {
             longValue = ((Number) value).longValue();
         }
 
-        if (value instanceof String) {
-            String strVal = (String) value;
+        if (value instanceof String strVal) {
 
             if (strVal.indexOf('-') != -1) {
                 String format;
@@ -237,7 +233,7 @@ public class TypeUtils {
                 }
             }
 
-            if (strVal.length() == 0) {
+            if (strVal.isEmpty()) {
                 return null;
             }
 
@@ -274,9 +270,8 @@ public class TypeUtils {
             longValue = ((Number) value).longValue();
         }
 
-        if (value instanceof String) {
-            String strVal = (String) value;
-            if (strVal.length() == 0) {
+        if (value instanceof String strVal) {
+            if (strVal.isEmpty()) {
                 return null;
             }
 
@@ -290,7 +285,7 @@ public class TypeUtils {
         return new java.sql.Date(longValue);
     }
 
-    public static final java.sql.Timestamp castToTimestamp(Object value) {
+    public static java.sql.Timestamp castToTimestamp(Object value) {
         if (value == null) {
             return null;
         }
@@ -313,9 +308,8 @@ public class TypeUtils {
             longValue = ((Number) value).longValue();
         }
 
-        if (value instanceof String) {
-            String strVal = (String) value;
-            if (strVal.length() == 0) {
+        if (value instanceof String strVal) {
+            if (strVal.isEmpty()) {
                 return null;
             }
 
@@ -338,9 +332,8 @@ public class TypeUtils {
             return ((Number) value).longValue();
         }
 
-        if (value instanceof String) {
-            String strVal = (String) value;
-            if (strVal.length() == 0) {
+        if (value instanceof String strVal) {
+            if (strVal.isEmpty()) {
                 return null;
             }
 
@@ -371,10 +364,9 @@ public class TypeUtils {
             return ((Number) value).intValue();
         }
 
-        if (value instanceof String) {
-            String strVal = (String) value;
+        if (value instanceof String strVal) {
 
-            if (strVal.length() == 0) {
+            if (strVal.isEmpty()) {
                 return null;
             }
 
@@ -411,10 +403,9 @@ public class TypeUtils {
             return ((Number) value).intValue() == 1;
         }
 
-        if (value instanceof String) {
-            String strVal = (String) value;
+        if (value instanceof String strVal) {
 
-            if (strVal.length() == 0) {
+            if (strVal.isEmpty()) {
                 return null;
             }
 

@@ -1,5 +1,6 @@
 package com.feirui.common.utils;
 
+import lombok.Data;
 import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,9 +25,6 @@ public class RsaHelper {
 
     /**
      * 获取公钥对象
-     *
-     * @param publicKeyBase64
-     * @return
      */
     public static PublicKey getPublicKey(String publicKeyBase64)
             throws InvalidKeySpecException, NoSuchAlgorithmException {
@@ -39,11 +37,6 @@ public class RsaHelper {
 
     /**
      * 获取私钥对象
-     *
-     * @param privateKeyBase64
-     * @return
-     * @throws NoSuchAlgorithmException
-     * @throws InvalidKeySpecException
      */
     public static PrivateKey getPrivateKey(String privateKeyBase64)
             throws NoSuchAlgorithmException, InvalidKeySpecException {
@@ -77,7 +70,6 @@ public class RsaHelper {
      * @param ciphertext  密文
      * @param key         加密秘钥
      * @param segmentSize 分段大小，<=0 不分段
-     * @return
      */
     public static String encipher(String ciphertext, java.security.Key key, int segmentSize) {
         try {
@@ -88,7 +80,7 @@ public class RsaHelper {
             Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
             // 根据公钥，对Cipher对象进行初始化
             cipher.init(Cipher.ENCRYPT_MODE, key);
-            byte[] resultBytes = null;
+            byte[] resultBytes;
 
             if (segmentSize > 0) {
                 resultBytes = cipherDoFinal(cipher, srcBytes, segmentSize);
@@ -96,8 +88,7 @@ public class RsaHelper {
                 resultBytes = cipher.doFinal(srcBytes);
             }
 
-            String base64Str = Base64.encodeBase64String(resultBytes);
-            return base64Str;
+            return Base64.encodeBase64String(resultBytes);
         } catch (Exception e) {
             logger.error("encipher", e);
             return null;
@@ -106,14 +97,6 @@ public class RsaHelper {
 
     /**
      * 分段大小
-     *
-     * @param cipher
-     * @param srcBytes
-     * @param segmentSize
-     * @return
-     * @throws IllegalBlockSizeException
-     * @throws BadPaddingException
-     * @throws IOException
      */
     private static byte[] cipherDoFinal(Cipher cipher, byte[] srcBytes, int segmentSize)
             throws IllegalBlockSizeException, BadPaddingException, IOException {
@@ -146,8 +129,6 @@ public class RsaHelper {
      *
      * @param contentBase64    待加密内容,base64 编码
      * @param privateKeyBase64 私钥 base64 编码
-     * @return
-     * @segmentSize 分段大小
      */
     public static String decipher(String contentBase64, String privateKeyBase64, int segmentSize) {
         try {
@@ -165,7 +146,6 @@ public class RsaHelper {
      * @param contentBase64 密文
      * @param key           解密秘钥
      * @param segmentSize   分段大小（小于等于0不分段）
-     * @return
      */
     public static String decipher(String contentBase64, java.security.Key key, int segmentSize) {
         try {
@@ -177,7 +157,7 @@ public class RsaHelper {
 
             // 根据公钥，对Cipher对象进行初始化
             deCipher.init(Cipher.DECRYPT_MODE, key);
-            byte[] decBytes = null;
+            byte[] decBytes;
             if (segmentSize > 0) {
                 decBytes = cipherDoFinal(deCipher, srcBytes, segmentSize);
             } else {
@@ -193,8 +173,6 @@ public class RsaHelper {
 
     /**
      * 生成公钥、私钥对(keysize=1024)
-     *
-     * @return
      */
     public RsaHelper.KeyPairInfo getKeyPair() {
         return getKeyPair(1024);
@@ -202,9 +180,6 @@ public class RsaHelper {
 
     /**
      * 生成公钥、私钥对
-     *
-     * @param keySize
-     * @return
      */
     public RsaHelper.KeyPairInfo getKeyPair(int keySize) {
         try {
@@ -218,7 +193,7 @@ public class RsaHelper {
             // 得到公钥
             RSAPublicKey orapublicKey = (RSAPublicKey) keyPair.getPublic();
 
-            RsaHelper.KeyPairInfo pairInfo = new RsaHelper.KeyPairInfo(keySize);
+            RsaHelper.KeyPairInfo pairInfo = new KeyPairInfo(keySize);
             // 公钥
             byte[] publicKeybyte = orapublicKey.getEncoded();
             String publicKeyString = Base64.encodeBase64String(publicKeybyte);
@@ -252,8 +227,6 @@ public class RsaHelper {
      *
      * @param contentBase64    待加密内容,base64 编码
      * @param privateKeyBase64 私钥 base64 编码
-     * @return
-     * @segmentSize 分段大小
      */
     public String decipher(String contentBase64, String privateKeyBase64) {
         return decipher(contentBase64, privateKeyBase64, -1);
@@ -262,42 +235,14 @@ public class RsaHelper {
     /**
      * 秘钥对
      */
-    public class KeyPairInfo {
+    @Data
+    public static class KeyPairInfo {
         String privateKey;
         String publicKey;
         int keySize = 0;
 
         public KeyPairInfo(int keySize) {
             setKeySize(keySize);
-        }
-
-        public KeyPairInfo(String publicKey, String privateKey) {
-            setPrivateKey(privateKey);
-            setPublicKey(publicKey);
-        }
-
-        public String getPrivateKey() {
-            return privateKey;
-        }
-
-        public void setPrivateKey(String privateKey) {
-            this.privateKey = privateKey;
-        }
-
-        public String getPublicKey() {
-            return publicKey;
-        }
-
-        public void setPublicKey(String publicKey) {
-            this.publicKey = publicKey;
-        }
-
-        public int getKeySize() {
-            return keySize;
-        }
-
-        public void setKeySize(int keySize) {
-            this.keySize = keySize;
         }
     }
 }

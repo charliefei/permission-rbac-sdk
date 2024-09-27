@@ -7,7 +7,6 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
-import com.feirui.token.domain.AuthUserModel;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -96,11 +95,6 @@ public abstract class JSON {
 
     /**
      * 使用蛇形命名策略反序列化
-     *
-     * @param text
-     * @param clazz
-     * @param <T>
-     * @return
      */
     public static <T> T parseObjectSnake(String text, Class<T> clazz) {
         if (StringUtils.isNotBlank(text)) {
@@ -112,13 +106,6 @@ public abstract class JSON {
         }
         return null;
     }
-
-    public static void main(String[] args) {
-        String user = "{\"id\":\"7f3d2e60-65a8-4106-8e58-8e1a0fc3c00c\",\"username\":\"lsc\",\"password\":\"e3dd3a2db3b50c4d7eb09a818e52d8ed\",\"realname\":\"lsc\",\"phone\":\"17714331111\",\"companyId\":\"abdeec7b-647a-48c3-b414-3b9bdd6e0a40\",\"cardNo\":\"100002\",\"status\":0,\"lockStatus\":0,\"freezeStatus\":0,\"adminType\":1,\"email\":\"\",\"firstLoginStatus\":1,\"pwdWrongTimes\":0,\"pwdUnlockTime\":\"2023-10-17 13:37:00\",\"pwdExpireTime\":\"2024-02-12 11:27:08\",\"loginCount\":99,\"encryptMode\":\"MD5\",\"companyName\":null,\"companyCode\":null,\"accessTime\":0,\"externalInfo\":null,\"userKey\":null,\"photo\":\"DISK-5373e639-40c3-4322-8e6c-b47e6eaa6c9f\",\"manufacturer\":null,\"departmentScope\":null,\"recentLoginDate\":null,\"departmentId\":\"1\",\"departmentName\":\"江苏群杰\",\"consoleLoginStatus\":0,\"orgNo\":\"A001\"}";
-        AuthUserModel authUserModel = JSON.parseObject(user, AuthUserModel.class);
-        System.out.println(authUserModel.getCompanyId());
-    }
-
 
     public static <T> T parseObjectAutoString(String text, Class<T> clazz) {
         if (StringUtils.isNotBlank(text)) {
@@ -149,7 +136,7 @@ public abstract class JSON {
                 LOGGER.error(" >>>>>>>>>>>>>>> parseArray error, source value: " + text, ex);
             }
         }
-        return new ArrayList<T>();
+        return new ArrayList<>();
     }
 
     public static <T> List<T> parseArrayAutoString(String text, Class<T> clazz) {

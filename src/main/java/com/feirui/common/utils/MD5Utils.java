@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Objects;
 
 @Slf4j
 public class MD5Utils {
@@ -16,9 +17,6 @@ public class MD5Utils {
 
     /**
      * 功能描述: MD5加密
-     *
-     * @Author 瑞尔
-     * @Date 9:26 2023/3/14
      **/
     public static String getMd5Code(String strObj) {
         try {
@@ -33,23 +31,17 @@ public class MD5Utils {
 
     /**
      * 功能描述: 转换字节数组为16进制字串
-     *
-     * @Author 瑞尔
-     * @Date 9:28 2023/3/14
      **/
     private static String byteToString(byte[] bByte) {
-        StringBuffer sBuffer = new StringBuffer();
-        for (int i = 0; i < bByte.length; i++) {
-            sBuffer.append(byteToArrayString(bByte[i]));
+        StringBuilder sBuffer = new StringBuilder();
+        for (byte b : bByte) {
+            sBuffer.append(byteToArrayString(b));
         }
         return sBuffer.toString();
     }
 
     /**
      * 功能描述: 返回形式为数字跟字符串
-     *
-     * @Author 瑞尔
-     * @Date 9:28 2023/3/14
      **/
     private static String byteToArrayString(byte bByte) {
         int iRet = bByte;
@@ -66,19 +58,14 @@ public class MD5Utils {
      *
      * @param companyCode 企业号
      * @return md5加密串
-     * @throws NoSuchAlgorithmException
      */
-    public static String getAppKey(String companyCode) throws NoSuchAlgorithmException {
-        return getMd5Code(getMd5Code(companyCode + "-qjCode"));
+    public static String getAppKey(String companyCode) {
+        return getMd5Code(Objects.requireNonNull(getMd5Code(companyCode + "-qjCode")));
     }
 
 
     /**
      * 根据六位随机数字，生成六位口令
-     *
-     * @return java.lang.String
-     * @author feixiang
-     * @since V1.0 feixiang 2022-05-16 10:34 初版设定
      */
     public static String getDynamicNumber(String code) {
         if (!StrUtil.isNumeric(code)) {
@@ -90,7 +77,7 @@ public class MD5Utils {
         }
         try {
             for (int i = 0; i < num; i++) {
-                code = getMd5Code(code).substring(num, num + 6);
+                code = Objects.requireNonNull(getMd5Code(code)).substring(num, num + 6);
             }
             return code;
         } catch (Exception e) {

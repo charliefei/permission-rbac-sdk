@@ -2,7 +2,7 @@ package com.feirui.common.constant;
 
 public class RedisConstant {
     /**
-     * 用户信息前缀
+     * 用户认证相关key
      */
     public static final String COMMON_USER_HEADER = "COMMON_SYSTEM_USER_";
 
