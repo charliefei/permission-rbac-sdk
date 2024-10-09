@@ -7,7 +7,7 @@
         select auth_id from sys_auth where user_id = #{userId} and auth_type = 1
     </select>
 
-    <select id="selectAuthByUserId" resultType="com.feirui.permission.domain.entity.SysUserAuth">
+    <select id="selectAuthByUserId" resultType="com.feirui.authorization.domain.entity.SysUserAuth">
         select sua.user_id, sua.auth_id, sua.auth_type, sua.is_contains_lower, sd.org_no
         from sys_auth sua left join sys_department sd on sua.auth_id = sd.id
         where sua.user_id = #{userId}
