@@ -5,7 +5,7 @@ sys_user
    - password
    - company_id
    - is_admin
-   - power
+   - power 权限0本人1本部门2本部门及下属3全部
    - is_first_login
    - status
 
@@ -16,6 +16,7 @@ sys_user_role
    - user_id
    - company_id
    - status
+![](./images/sys_user_role.png)
 
 3. 角色表
 sys_role
@@ -25,6 +26,7 @@ sys_role
    - parent_id
    - remark
    - status
+![](./images/sys_role.png)
 
 4. 角色-菜单关联表
 sys_role_menu
@@ -33,6 +35,7 @@ sys_role_menu
    - role_id
    - company_id
    - status
+![](./images/sys_role_menu.png)
 
 5. 菜单表 --> 前端动态菜单路由
 sys_menu
@@ -52,10 +55,12 @@ sys_menu
 sys_menu_permission
    - id
    - menu_id
+   - menu_title 菜单标题
    - menu_name 菜单名称
    - menu_permission 菜单权限
    - remark 权限描述
    - status
+![](./images/sys_menu_permission.png)
 
 7. 用户-部门关联表
 sys_user_dept
@@ -63,16 +68,18 @@ sys_user_dept
    - user_id
    - dept_id
    - company_id
-   - is_leader
-   - is_default
-   - power
+   - is_leader 是否领导0否1是
+   - is_default 默认部门0否1是
+   - power 权限范围0个人、1部门、2部门及子集
    - sort
    - status
+![](./images/sys_user_dept.png)
 
 8. 部门表
 sys_dept
    - id
    - dept_name
+![](./images/sys_dept.png)
 
 9. 数据权限表
 sys_user_auth
@@ -84,3 +91,4 @@ sys_user_auth
    - is_contains_lower 是否包含下级0不包含1包含
    - org_no 部门组织代码
    - status
+![](./images/sys_user_auth.png)
