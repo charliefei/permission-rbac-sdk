@@ -13,6 +13,8 @@ public class RedisConstant {
      */
     public static final String COMMON_TOKEN = "COMMON_TOKEN_";
 
+    // *********************************************************
+
     /**
      * 权限配置相关key
      */
@@ -29,6 +31,8 @@ public class RedisConstant {
     public static final String AUTH_TYPE = "AUTH_TYPE";
 
     public static final String MENU_PERMISSION = "MENU_PERMISSION_";
+
+    // *********************************************************
 
     /**
      * 系统设置相关key

@@ -58,7 +58,7 @@ sys_menu_permission
    - status
 
 7. 用户-部门关联表
-sys_user_department
+sys_user_dept
    - id
    - user_id
    - dept_id
@@ -70,17 +70,17 @@ sys_user_department
    - status
 
 8. 部门表
-sys_department
+sys_dept
    - id
    - dept_name
 
-9. 权限表
-sys_auth
+9. 数据权限表
+sys_user_auth
    - id
-   - user_id
-   - auth_id
-   - auth_type
-   - company_id
-   - is_contains_lower
-   - org_no
+   - user_id 用户ID
+   - auth_id 权限ID(内容包括：默认六种权限类型、自定义部门ID)
+   - auth_type 1:默认六种权限类型;2:自定义部门
+   - company_id 公司ID
+   - is_contains_lower 是否包含下级0不包含1包含
+   - org_no 部门组织代码
    - status

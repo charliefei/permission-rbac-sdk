@@ -29,4 +29,57 @@ public class AuthTypeConstant {
      * 自定义部门
      */
     public static final String USER_DEFINITION_DEPART = "-1";
+
+    // *********************************************************
+
+    /**
+     * 无权限
+     */
+    public static final String NO_AUTH = "-1";
+
+    /**
+     * 所有权限
+     */
+    public static final String ALL_AUTH = "0";
+
+    /**
+     * 本人权限
+     */
+    public static final String OWN_AUTH = "1";
+
+    /**
+     * 条件权限
+     */
+    public static final String CONDITION_AUTH = "2";
+
+    // *********************************************************
+
+    /**
+     * 默认部门类型
+     */
+    public static final String DEFAULT_DEPART = "1";
+
+    /**
+     * 自定义部门
+     */
+    public static final String DEFINITION_DEPART = "2";
+
+    // *********************************************************
+
+    /**
+     * 不包含下级部门及公司
+     */
+    public static final int NOT_CONTAINS_LOWER = 0;
+
+    /**
+     * 包含下级部门及公司
+     */
+    public static final int CONTAINS_LOWER = 1;
+
+    // *********************************************************
+
+    /**
+     * 管理员
+     */
+    public static final int IS_ADMIN = 1;
 }

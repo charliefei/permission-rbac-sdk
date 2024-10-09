@@ -68,40 +68,12 @@ public class RedisUtils {
         return (String) redisTemplate.opsForValue().get(key);
     }
 
-    public Boolean zAdd(String key, String value, Long score) {
-        return redisTemplate.opsForZSet().add(key, value, Double.parseDouble(String.valueOf(score)));
-    }
-
-    public Long countZset(String key) {
-        return redisTemplate.opsForZSet().size(key);
-    }
-
-    public Set<Object> rangeZset(String key, long start, long end) {
-        return redisTemplate.opsForZSet().range(key, start, end);
-    }
-
-    public Long removeZset(String key, Object value) {
-        return redisTemplate.opsForZSet().remove(key, value);
-    }
-
-    public void removeZsetList(String key, Set<String> value) {
-        value.forEach((val) -> redisTemplate.opsForZSet().remove(key, val));
-    }
-
-    public Double score(String key, Object value) {
-        return redisTemplate.opsForZSet().score(key, value);
-    }
-
-    public Set<Object> rangeByScore(String key, long start, long end) {
-        return redisTemplate.opsForZSet().rangeByScore(key, Double.parseDouble(String.valueOf(start)), Double.parseDouble(String.valueOf(end)));
-    }
-
-    public Object addScore(String key, Object obj, double score) {
-        return redisTemplate.opsForZSet().incrementScore(key, obj, score);
-    }
-
-    public Object rank(String key, Object obj) {
-        return redisTemplate.opsForZSet().rank(key, obj);
+    public void hset(String key, String item, Object value) {
+        try {
+            redisTemplate.opsForHash().put(key, item, value);
+        } catch (Exception e) {
+            log.error("hash表中放入数据异常，key = " + key, e);
+        }
     }
 
 }

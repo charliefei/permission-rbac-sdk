@@ -1,7 +1,7 @@
 package com.feirui.permission.service.strategy;
 
 import com.feirui.common.constant.AuthTypeConstant;
-import com.feirui.permission.domain.AuthCondition;
+import com.feirui.permission.domain.dto.AuthCondition;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.util.StringUtils;
@@ -52,18 +52,25 @@ public enum AuthStrategyEnum {
         public void authExecute(AuthCondition authCondition) {
 
         }
+    },
+
+    NO_AUTH(AuthTypeConstant.NO_AUTH) {
+        @Override
+        public void authExecute(AuthCondition authCondition) {
+
+        }
     };
 
     private final String authType;
 
     public static AuthStrategyEnum getAuthStrategy(String authType) {
-        if (StringUtils.hasLength(authType)) return null;
+        if (StringUtils.hasLength(authType)) return NO_AUTH;
         for (AuthStrategyEnum authStrategy : AuthStrategyEnum.values()) {
             if (Objects.equals(authStrategy.authType, authType)) {
                 return authStrategy;
             }
         }
-        return null;
+        return NO_AUTH;
     }
 
     public abstract void authExecute(AuthCondition authCondition);
