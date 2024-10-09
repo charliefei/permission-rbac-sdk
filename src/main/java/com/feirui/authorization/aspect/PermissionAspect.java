@@ -11,12 +11,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class PermissionAspect {
 
-    @Around("@annotation(MenuPermission)")
+    @Around("@annotation(com.feirui.authorization.aspect.RequiredMenuPermission)")
     public Object menuPermission(ProceedingJoinPoint joinPoint) {
         return null;
     }
 
-    @Before("@annotation(AuthPermission)")
+    @Before("@annotation(com.feirui.authorization.aspect.RequiredAuthPermission)")
     public void authPermission(JoinPoint joinPoint) {
 
     }
